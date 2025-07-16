@@ -34,7 +34,6 @@ query getProduct($slug: ID!) {
       averageRating
       edges {
         node {
-          rating
           ...Comment
         }
       }

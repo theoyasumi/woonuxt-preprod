@@ -14,12 +14,14 @@ query getProduct($slug: ID!) {
     description
     rawDescription: description(format: RAW)
     shortDescription
-    ...ProductWithAttributes
+
+    ...ProductAttributes
     ...ProductCategories
     ...Terms
     ...SimpleProduct
     ...VariableProduct
     ...ExternalProduct
+
     related(first: 5) {
       nodes {
         ...SimpleProduct
@@ -27,6 +29,7 @@ query getProduct($slug: ID!) {
         ...ExternalProduct
       }
     }
+
     reviews {
       averageRating
       edges {
@@ -39,35 +42,36 @@ query getProduct($slug: ID!) {
   }
 }
 
-... on SimpleProduct {
-  attributes {
-    nodes {
-      ...ProductAttribute
+fragment ProductAttributes on Product {
+  ... on SimpleProduct {
+    attributes {
+      nodes {
+        ...ProductAttribute
+      }
+    }
+  }
+  ... on VariableProduct {
+    attributes {
+      nodes {
+        ...ProductAttribute
+      }
+    }
+  }
+  ... on ExternalProduct {
+    attributes {
+      nodes {
+        ...ProductAttribute
+      }
+    }
+  }
+  ... on GroupProduct {
+    attributes {
+      nodes {
+        ...ProductAttribute
+      }
     }
   }
 }
-... on VariableProduct {
-  attributes {
-    nodes {
-      ...ProductAttribute
-    }
-  }
-}
-... on GroupProduct {
-  attributes {
-    nodes {
-      ...ProductAttribute
-    }
-  }
-}
-... on ExternalProduct {
-  attributes {
-    nodes {
-      ...ProductAttribute
-    }
-  }
-}
-
 
 fragment ProductAttribute on ProductAttribute {
   variation
